@@ -17,11 +17,11 @@ pstudy <- function(df, id_var, group_var, groups, p_train) {
 
 
 training <- function(x, ...) {
-  UseMethod("train")
+  UseMethod("training")
 }
 
 testing <- function(x, ...) {
-  UseMethod("test")
+  UseMethod("testing")
 }
 
 subset.pstudy <- function(obj, df, ftrain) {
