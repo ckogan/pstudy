@@ -9,7 +9,7 @@ pstudy <- function(df, id_var, group_var, groups, p_train) {
   id <- eval(iexpr, df, parent.frame())
   ngrp <- table(grp)
   in_test <- Map(split_tt, ngrp, p_train)
-  ix <- do.call(c,tapply(1:nrow(df), grp, I))
+  ix <- order(do.call(c,tapply(1:nrow(df), grp, I)))
   in_test <- as.integer(do.call(c, in_test)[ix])
   obj <- list(train_id = id[!in_test], group_var = gexpr, id_var = iexpr, groups = groups, p_train = p_train)
   structure(obj, class = "pstudy")
