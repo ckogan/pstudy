@@ -8,10 +8,10 @@ pstudy <- function(df, id_var, group_var, groups, p_train) {
   iexpr <- substitute(id_var)
   id <- eval(iexpr, df, parent.frame())
   ngrp <- table(grp)
-  in_test <- Map(split_tt, ngrp, p_train)
+  in_train <- Map(split_tt, ngrp, p_train)
   ix <- order(do.call(c,tapply(1:nrow(df), grp, I)))
-  in_test <- as.integer(do.call(c, in_test)[ix])
-  obj <- list(train_id = id[!in_test], group_var = gexpr, id_var = iexpr, groups = groups, p_train = p_train)
+  in_train <- do.call(c, in_train)[ix]
+  obj <- list(train_id = id[in_train], group_var = gexpr, id_var = iexpr, groups = groups, p_train = p_train)
   structure(obj, class = "pstudy")
 }
 
@@ -42,5 +42,5 @@ testing.pstudy <- function(obj, df) {
 split_tt <- function(n, p_train) {
   n_train <- trunc(n * p_train)
   n_test <- n - n_train
-  sample(c(rep(0L, n_train), rep(1L, n_test)))
+  sample(c(rep(T, n_train), rep(F, n_test)))
 }
